@@ -23,6 +23,7 @@ public:
 	void grayscale();
 	void monochrome();
 	void negative();
+	Image* getCopy();
 	friend std::istream& operator>>(std::istream& in, PPM& pp);
 	friend std::ostream& operator<<(std::ostream& out, PPM& pp);
 };

@@ -129,6 +129,15 @@ void PGM::monochrome() {
 			else pixel[i][j] = 1;
 		}
 }
+void PGM::negative() {
+	for (unsigned int i = 0; i < height; i++)
+		for (unsigned int j = 0; j < width; j++) 
+			pixel[i][j] = maxColor - pixel[i][j];
+	std::cout << "Negativating successful.\n";
+}
+Image* PGM::getCopy() {
+	return new PGM(*this);
+}
 std::istream& operator>>(std::istream& in, PGM& pg) {
 	pg.readPixels(in);
 	return in;

@@ -22,11 +22,12 @@ public:
 	void setWidth(int);
 	void setHeight(int);
 	void getInfo();
+	virtual Image* getCopy();
 	virtual void readPixels() = 0;
 	virtual void printPixels() = 0;
 	virtual void grayscale() = 0;
 	virtual void monochrome() = 0;
-	//virtual void negative() = 0;
+	virtual void negative() = 0;
 	virtual void rotate(std::string direction) = 0;
 	//virtual void save(std::ostream&) = 0;
 	//virtual void saveAs(std::ostream&) = 0;

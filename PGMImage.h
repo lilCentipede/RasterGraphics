@@ -13,6 +13,7 @@ public:
 	PGM(const PGM& other);
 	PGM& operator=(const PGM& other);
 	~PGM();
+	Image* getCopy();
 	void createPixels(unsigned int, unsigned int);
 	void deletePixels();
 	void copyPixels(const PGM&);
@@ -23,6 +24,7 @@ public:
 	void rotate(std::string direction);
 	void grayscale();
 	void monochrome();
+	void negative();
 	friend std::istream& operator>>(std::istream& in, PGM& pg);
 	friend std::ostream& operator<<(std::ostream& out, PGM& pg);
 };

@@ -11,6 +11,7 @@ public:
 	PBM(const PBM& other);
 	PBM& operator=(const PBM& other);
 	~PBM();
+
 	void createPixels(unsigned int , unsigned int);
 	void deletePixels();
 	void copyPixels(const PBM&);
@@ -20,7 +21,9 @@ public:
 	void printPixels();
 	void rotate(std::string direction);
 	void grayscale();
-	void monochrome();
+	void monochrome();	
+	void negative();
+	Image* getCopy();
 	friend std::istream& operator>>(std::istream& in, PBM& pp);
 	friend std::ostream& operator<<(std::ostream& out, PBM& pp);
 };

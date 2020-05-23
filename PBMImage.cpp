@@ -124,6 +124,16 @@ void PBM::grayscale() {
 void PBM::monochrome() {
 	std::cout << "It is monochrome. \n";
 }
+void PBM::negative() {
+	for (unsigned int i = 0; i < height; i++)
+		for (unsigned int j = 0; j < width; j++)
+			pixel[i][j] = 1 - pixel[i][j];
+	std::cout << "Negativating successful.\n";
+}
+
+Image* PBM::getCopy() {
+	return new PBM(*this);
+}
 std::istream& operator>>(std::istream& in, PBM& pb) {
 	pb.readPixels(in);
 	return in;

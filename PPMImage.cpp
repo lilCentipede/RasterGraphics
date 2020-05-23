@@ -143,6 +143,9 @@ void PPM::negative() {
 		}
 	std::cout << "Negativating successful.\n";
 }
+Image* PPM::getCopy() {
+	return new PPM(*this);
+}
 std::istream& operator>>(std::istream& in, PPM& pp) {
 	pp.readPixels(in);
 	return in;

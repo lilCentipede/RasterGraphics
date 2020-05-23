@@ -33,3 +33,6 @@ void Image::setHeight(int h) {
 void Image::getInfo() {
     std::cout << "\nWidth: " << width << "Height: " << height  << "\nName: " << name << "Maximal Number for Color: " << maxColor;
 }
+Image* Image::getCopy() {
+    return nullptr;
+}

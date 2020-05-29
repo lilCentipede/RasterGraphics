@@ -7,7 +7,8 @@ private:
 	int** copyofPixel();
 	void deletecopyofPixel(int**);
 public:
-	PBM(unsigned int w =0, unsigned int h =0, const char* n ="", unsigned int mC = 0);
+	PBM(const char* mN = "" ,unsigned int w =0, unsigned int h =0, const char* n ="", unsigned int mC = 1);
+	PBM(std::string mN = "", unsigned int w = 0, unsigned int h = 0, std::string n = "", unsigned int mC = 1);
 	PBM(const PBM& other);
 	PBM& operator=(const PBM& other);
 	~PBM();
@@ -24,6 +25,8 @@ public:
 	void monochrome();	
 	void negative();
 	Image* getCopy();
+	void save(std::ostream& out);
+	void saveAs(std::string n);
 	friend std::istream& operator>>(std::istream& in, PBM& pp);
 	friend std::ostream& operator<<(std::ostream& out, PBM& pp);
 };

@@ -16,6 +16,10 @@ public:
 	void addChange(std::string command);
 	ImageHistory getImageByName(std::string n);
 	void undo();
+	void sessioninfo();
+	void save();
+	void close();
+	void getInfo();
 
 };
 

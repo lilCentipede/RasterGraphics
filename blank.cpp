@@ -28,3 +28,34 @@ history.getLastChange()->printPixels(); */
 	//session.getImageByName("first").getLastChange()->printPixels();
 	//session.undo();
 	//session.getImageByName("first").getLastChange()->printPixels();
+
+
+//std::ifstream in;
+//in.open("testPBM.txt");
+//Image* i;
+//i = new PBM(4, 3, "first", 1);
+//i->readPixels(in);
+//Session s(1, i);
+//s.addChange("grayscale");
+//s.sessioninfo();
+//std::cout << "-------------------------------------------------------\n";
+//in.close();
+//
+//in.open("testPGM.txt");
+//i = new PGM(4, 3, "second", 16);
+//i->readPixels(in);
+//s.addImage(i);
+//s.addChange("monochrome");
+//s.sessioninfo();
+//std::cout << "-------------------------------------------------------\n";
+//in.close();
+//
+//in.open("testPPM.txt");
+//i = new PGM(2, 2, "third", 255);
+//i->readPixels(in);
+//s.addImage(i);
+//s.addChange("rotateleft");
+//s.sessioninfo();
+//std::cout << "-------------------------------------------------------\n";
+//s.undo();
+//s.sessioninfo();

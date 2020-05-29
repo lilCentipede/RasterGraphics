@@ -42,3 +42,17 @@ void Session::undo() {
 		im.undoChange();
 	}
 }
+void Session::sessioninfo() {
+	for (ImageHistory& im : session) {
+		im.printChanges();
+	}
+}
+void Session::save() {
+	for (ImageHistory& im : session) {
+		im.save();
+	}
+}
+void Session::getInfo() {
+	std::cout << "Session's ID: " << id<<'\n';
+	session.front().printChanges();
+}

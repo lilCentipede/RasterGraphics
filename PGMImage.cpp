@@ -1,5 +1,8 @@
 #include "PGMImage.h"
-PGM::PGM(unsigned int w, unsigned int h, const char* n, unsigned int mC) :Image(w, h, n, mC) {
+PGM::PGM(const char* mN,unsigned int w, unsigned int h, const char* n, unsigned int mC) :Image(mN, w, h, n, mC) {
+	createPixels(h, w);
+}
+PGM::PGM(std::string mN , unsigned int w , unsigned int h , std::string n , unsigned int mC ) : Image(mN, w, h, n, mC) {
 	createPixels(h, w);
 }
 PGM::PGM(const PGM& other) : Image(other) {
@@ -100,7 +103,6 @@ void PGM::rotate(std::string direction) {
 		height = height + width;
 		width = height - width;
 		height = height - width;
-		std::cout << "Right rotation successful!\n";
 	}
 	else if (direction == "left") {
 		int** copyP = copyofPixel();
@@ -111,16 +113,13 @@ void PGM::rotate(std::string direction) {
 				pixel[j][i] = copyP[i][width - j - 1];
 			}
 		deletecopyofPixel(copyP);
-		std::cout << "Left rotation successful!\n";
 		height = height + width;
 		width = height - width;
 		height = height - width;
 	}
 	else std::cout << "Not a direction";
 }
-void PGM::grayscale() {
-	std::cout << "It is grayscale.\n";
-}
+void PGM::grayscale() {}
 void PGM::monochrome() {
 	for(unsigned int i = 0;i<height;i++)
 		for (unsigned int j = 0; j < width; j++) {
@@ -133,10 +132,14 @@ void PGM::negative() {
 	for (unsigned int i = 0; i < height; i++)
 		for (unsigned int j = 0; j < width; j++) 
 			pixel[i][j] = maxColor - pixel[i][j];
-	std::cout << "Negativating successful.\n";
 }
 Image* PGM::getCopy() {
 	return new PGM(*this);
+}
+void PGM::save(std::ostream& out) {
+	out << magicNumber << '\n'
+		<< width << " " << height << '\n';
+	printPixels(out);
 }
 std::istream& operator>>(std::istream& in, PGM& pg) {
 	pg.readPixels(in);

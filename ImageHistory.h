@@ -18,6 +18,7 @@ public:
 	ImageHistory(const ImageHistory& other);
 	ImageHistory& operator=(const ImageHistory& other);
 	~ImageHistory();
+	bool anyChanges();
 	void addChange(std::string command);
 	void undoChange();
 	std:: string getName() { return name; }

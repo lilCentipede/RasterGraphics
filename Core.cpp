@@ -44,19 +44,18 @@ void Core::readCommand(SessionsManager& sm) {
             command.help();
         //else if (line == "close")
            // command.close(sm);
-        else std::cout << "Wrong command!";
+        else std::cout << "Wrong command!\n";
     }
     else if (numberwords == 2) {
         std::string first = getFirstWord();
         std::string second = getSecondWord();
         if (first == "load") {
-            std::ifstream in(second);
             Image* i = createImage(second);
-            command.load(sm, i->getCopy());
+            command.load(sm, i);
         }
         else if (first == "add") {
             Image* i = createImage(second);
-            command.add(sm, i->getCopy());
+            command.add(sm, i);
         }
         else if (first == "rotate")
         {
@@ -71,13 +70,20 @@ void Core::readCommand(SessionsManager& sm) {
         }
         else if (first == "session" && second == "info")
             command.sessionInfo(sm);
+        else std::cout << "Wrong command!\n";
     }
 }
 Image* Core::createImage(std::string& _name) {
     std::ifstream in(_name);
+    if (!in.good())
+        throw std::exception("Something is wrong with the file.");
     Image* image = nullptr;
     std::string magicNumber;
     in >> magicNumber;
+    if (magicNumber != "P1" && magicNumber != "P2" && 
+        magicNumber != "P3" && magicNumber != "P4" && 
+        magicNumber != "P5" && magicNumber != "P6")
+            throw std::exception("Incorrect file type!");
     if (magicNumber == "P1") {
         unsigned int width;
         unsigned int height;

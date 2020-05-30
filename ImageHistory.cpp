@@ -9,9 +9,9 @@ ImageHistory::ImageHistory(std::string n, Image* i) {
 }
 ImageHistory::ImageHistory(const ImageHistory& other) {
 	name = other.name;
-	for (Image* i : other.changes){ 
-		Image* im = i->getCopy();
-		changes.push_back(im); 
+	for (unsigned int i = 0; i < other.changes.size(); i++) {
+		Image* im = other.changes[i]->getCopy();
+		changes.push_back(im);
 	}
 	list_of_changes = other.list_of_changes;
 
@@ -34,17 +34,22 @@ void ImageHistory::deleteHistory() {
 	for (unsigned int i = 0; i < changes.size(); i++) {
 		delete changes[i];
 	}
+	changes.clear();
 }
 ImageHistory::~ImageHistory(){
 	deleteHistory();
 }
+bool ImageHistory::anyChanges() {
+	return (list_of_changes.size() != 0);
+}
 void ImageHistory::undoChange() {
-	if (changes[1] != nullptr) {
+	if (list_of_changes.size() <= 0) {
+		throw std::exception("No changes to be undone");
+	}
 		delete changes.back();
 		//changes.back() = nullptr;
 		changes.pop_back();
 		list_of_changes.pop_back();
-	}
 }
 Image* ImageHistory::getLastChange()const {
 	return changes.back();
@@ -89,17 +94,19 @@ void ImageHistory::addChange(std::string command) {
 
 }
 void ImageHistory::printChanges() {
-	std::cout << "Changes over \"" << name << "\" are: \n";
-	for (unsigned int i = 0; i < list_of_changes.size();i++) {
-		std::cout <<i + 1<<'.'<< list_of_changes[i]<< '\n';
-	}
-	changes.back()->printPixels();
+	std::cout << "Changes over \"" << name << "\" are:\n";
+	if (anyChanges()){
+		for (unsigned int i = 0; i < list_of_changes.size(); i++) 
+				std::cout << i + 1 << '.' << list_of_changes[i] << '\n';
+		}
+	else std::cout << "none\n";
 }
 void ImageHistory::save() {
-	Image* i = changes.back();
+	Image* i = changes.back()->getCopy();
 	deleteHistory();
-	changes.push_back(i->getCopy());
+	list_of_changes.clear();
+	changes.push_back(i);
 	std::fstream out(i->getName(), std::ios::out);
-	out << i;
+	i->save(out);
 	out.close();
 }

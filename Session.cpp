@@ -24,7 +24,6 @@ Session& Session::operator=(const Session& other) {
 }
 void Session::addImage(Image* i) {
 	ImageHistory im(i);
-	//delete i;
 	session.push_back(im);
 }
 void Session::addChange(std::string command) {
@@ -36,6 +35,7 @@ ImageHistory Session::getImageByName(std::string n) {
 	for (ImageHistory im : session) {
 		if (im.getName() == n) return im;
 	}
+	throw std::exception("No such image!");
 }
 void Session::undo() {
 	for (ImageHistory& im : session) {
@@ -53,6 +53,15 @@ void Session::save() {
 	}
 }
 void Session::getInfo() {
-	std::cout << "Session's ID: " << id<<'\n';
-	session.front().printChanges();
+	std::cout << "Current Session's ID: " << id<<'\n';
+	std::cout << "Images in current session: \n";
+	for (unsigned int i = 0; i < session.size() - 1; i++) {
+		std::cout<<session[i].getName()<<',';
+	}
+	std::cout << session.back().getName()<<'\n';
+
+	for (ImageHistory ih : session) {
+		ih.printChanges();
+	}
+	
 }

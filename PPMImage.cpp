@@ -71,7 +71,7 @@ void PPM::printPixels(std::ostream& out) {
 			for (unsigned int j = 0; j < width; j++) {
 				out << pixel[i][j] << " ";
 			}
-			std::cout << '\n';
+			out << '\n';
 		}
 	}
 }

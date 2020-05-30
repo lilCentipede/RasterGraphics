@@ -1,9 +1,12 @@
 #include "Commands.h"
 void Commands::load(SessionsManager& smanager, Image* i) {
 	smanager.createSession(i);
-	std::cout << "Session with ID:" << smanager.getcurrentId() << " started!";
+	std::cout << "Session with ID:" << smanager.getcurrentId() << " started!\n";
 }
 void Commands::save(SessionsManager& smanager) {
+	if (smanager.getSize() == 0) {
+		throw std::exception("No session has been started.");
+	}
 	smanager.save();
 }
 void Commands::help() {
@@ -26,29 +29,60 @@ void Commands::exitProgram() {
 	exit(EXIT_SUCCESS);
 }
 void Commands::grayscale(SessionsManager& smanager) {
+	if (smanager.getSize() == 0) {
+		throw std::exception("No session has been started.");
+	}
 	smanager.getcurrentSession().addChange("grayscale");
 }
 void Commands::monochrome(SessionsManager& smanager) {
+	if (smanager.getSize() == 0) {
+		throw std::exception("No session has been started.");
+	}
 	smanager.getcurrentSession().addChange("monochrome");
 }
 void Commands::negative(SessionsManager& smanager) {
+	if (smanager.getSize() == 0) {
+		throw std::exception("No session has been started.");
+	}
 	smanager.getcurrentSession().addChange("negative");
 }
 void Commands::rotateLeft(SessionsManager& smanager) {
+	if (smanager.getSize() == 0) {
+		throw std::exception("No session has been started.");
+	}
 	smanager.getcurrentSession().addChange("rotateleft");
 }
 void Commands::rotateRight(SessionsManager& smanager) {
+	if (smanager.getSize() == 0) {
+		throw std::exception("No session has been started.");
+	}
 	smanager.getcurrentSession().addChange("rotateright");
 }
 void Commands::undo(SessionsManager& smanager) {
+	if (smanager.getSize() == 0) {
+		throw std::exception("No session has been started.");
+	}
 	smanager.getcurrentSession().addChange("undo");
 }
 void Commands::add(SessionsManager& smanager,Image* i) {
+	if (smanager.getSize() == 0) {
+		throw std::exception("No session has been started.");
+	}
 	smanager.getcurrentSession().addImage(i);
 }
 void Commands::switchSession(SessionsManager& smanager,unsigned int id) {
-	smanager.getSessionById(id);
+	if (smanager.getSize() == 0) {
+		throw std::exception("No session has been started.");
+	}
+	if (id > smanager.getSize()) {
+		throw std::exception("Session with that id does not exist.");
+	}
+	smanager.switchsession(id);
+	smanager.getcurrentSession().getInfo();
 }
 void Commands::sessionInfo(SessionsManager& smanager) {
+	if (smanager.getSize() == 0) {
+		throw std::exception("No session has been started.");
+	}
 	smanager.getcurrentSession().getInfo();
 }

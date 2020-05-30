@@ -10,6 +10,7 @@ public:
 	SessionsManager(Session& s);
 	SessionsManager(const SessionsManager& other);
 	~SessionsManager() {}
+	int getSize()const { return all_sessions.size(); }
 	void switchsession(unsigned int id);
 	void save();
 	void close();

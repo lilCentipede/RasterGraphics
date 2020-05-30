@@ -1,2 +1,2 @@
 # RasterGraphics
-An universe project
+An university project

@@ -9,7 +9,8 @@ private:
 	int** copyofPixel();
 	void deletecopyofPixel(int**);
 public:
-	PGM(unsigned int w = 0, unsigned int h = 0, const char* n = "", unsigned int mC = 0);
+	PGM(const char* mN = "",unsigned int w = 0, unsigned int h = 0, const char* n = "", unsigned int mC = 0);
+	PGM(std::string mN = "", unsigned int w = 0, unsigned int h = 0, std::string n = "", unsigned int mC = 16);
 	PGM(const PGM& other);
 	PGM& operator=(const PGM& other);
 	~PGM();
@@ -25,6 +26,7 @@ public:
 	void grayscale();
 	void monochrome();
 	void negative();
+	void save(std::ostream& out);
 	friend std::istream& operator>>(std::istream& in, PGM& pg);
 	friend std::ostream& operator<<(std::ostream& out, PGM& pg);
 };

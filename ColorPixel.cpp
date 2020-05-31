@@ -1,6 +1,4 @@
 #include "ColorPixel.h"
-//ColorPixel::ColorPixel() : MaxColor(255), red(255), green(255), blue(255) {}
-//ColorPixel::ColorPixel(unsigned int mC) : MaxColor(mC), red(mC), green(mC), blue(mC) {}
 ColorPixel::ColorPixel(unsigned int mC, unsigned int r, unsigned int g, unsigned int b) : MaxColor(mC), red(r), green(g), blue(b) {}
 ColorPixel::ColorPixel(const ColorPixel& other) {
 	MaxColor = other.MaxColor;

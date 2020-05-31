@@ -8,7 +8,8 @@ private:
 	ColorPixel** copyofPixel();
 	void deletecopyofPixel(ColorPixel**);
 public:
-	PPM(unsigned int w = 0, unsigned int h = 0, const char* n = "", unsigned int mC = 0);
+	PPM(const char* mN = "",unsigned int w = 0, unsigned int h = 0, const char* n = "", unsigned int mC = 0);
+	PPM(std::string mN = "", unsigned int w = 0, unsigned int h = 0, std::string n = "", unsigned int mC = 256);
 	PPM(const PPM& other);
 	PPM& operator=(const PPM& other);
 	~PPM();
@@ -24,6 +25,7 @@ public:
 	void monochrome();
 	void negative();
 	Image* getCopy();
+	void save(std::ostream& out);
 	friend std::istream& operator>>(std::istream& in, PPM& pp);
 	friend std::ostream& operator<<(std::ostream& out, PPM& pp);
 };

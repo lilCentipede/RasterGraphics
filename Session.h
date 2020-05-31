@@ -12,10 +12,15 @@ public:
 	Session& operator=(const Session& other);
 	~Session() {}
 	unsigned int getId() const { return id; }
+	void idMinusOne();
 	void addImage(Image* i);
 	void addChange(std::string command);
 	ImageHistory getImageByName(std::string n);
 	void undo();
+	void sessioninfo();
+	void save();
+	void saveAs(std::string name);
+	void getInfo();
 
 };
 

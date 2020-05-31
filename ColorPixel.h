@@ -8,9 +8,7 @@ private:
 	unsigned int green;
 	unsigned int blue;
 public:
-	//ColorPixel();
 	ColorPixel(unsigned int mC = 255, unsigned int r = 255, unsigned int g = 255, unsigned int b = 255);
-	//ColorPixel(unsigned int mC = 255);
 	ColorPixel(const ColorPixel& other);
 	ColorPixel& operator=(const ColorPixel& other);
 	void grayscale(); //formula

@@ -1,5 +1,4 @@
 #include "Session.h"
-
 Session::Session(unsigned int _id, Image* i) : id(_id) {
 	ImageHistory im(i);
 	session.push_back(im);
@@ -22,9 +21,12 @@ Session& Session::operator=(const Session& other) {
 	}
 	return *this;
 }
+void Session::idMinusOne() {
+	assert(id >= 2);
+	id--;
+}
 void Session::addImage(Image* i) {
 	ImageHistory im(i);
-	//delete i;
 	session.push_back(im);
 }
 void Session::addChange(std::string command) {
@@ -36,9 +38,38 @@ ImageHistory Session::getImageByName(std::string n) {
 	for (ImageHistory im : session) {
 		if (im.getName() == n) return im;
 	}
+	throw std::exception("No such image!");
 }
 void Session::undo() {
 	for (ImageHistory& im : session) {
 		im.undoChange();
+	}
+}
+void Session::sessioninfo() {
+	for (ImageHistory& im : session) {
+		im.printChanges();
+	}
+}
+void Session::save() {
+	for (ImageHistory& im : session) {
+		im.save();
+	}
+}
+void Session::saveAs(std::string name) {
+	session[0].saveAs(name);
+	for (unsigned int i = 1; i < session.size(); i++) {
+		session[i].save();
+	}
+}
+void Session::getInfo() {
+	std::cout << "Current Session's ID: " << id<<'\n';
+	std::cout << "Images in current session: \n";
+	for (unsigned int i = 0; i < session.size() - 1; i++) {
+		std::cout<<session[i].getName()<<',';
+	}
+	std::cout << session.back().getName()<<'\n';
+
+	for (ImageHistory ih : session) {
+		ih.printChanges();
 	}
 }

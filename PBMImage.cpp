@@ -1,5 +1,8 @@
 #include "PBMImage.h"
-PBM::PBM(unsigned int w, unsigned int h, const char* n, unsigned int mC) :Image(w, h, n, mC) {
+PBM::PBM(const char* mN ,unsigned int w, unsigned int h, const char* n, unsigned int mC) :Image(mN, w, h, n, mC) {
+	createPixels(h, w);
+}
+PBM::PBM(std::string mN , unsigned int w , unsigned int h , std::string n , unsigned int mC ) : Image(mN, w, h, n, mC) {
 	createPixels(h, w);
 }
 PBM::PBM(const PBM& other) : Image(other) {
@@ -45,11 +48,15 @@ void PBM::readPixels() {
 void PBM::readPixels(std::istream& in) {
 	for (unsigned int i = 0; i < height; i++)
 		for (unsigned int j = 0; j < width; j++) {
-			if (in)
 				in >> pixel[i][j];
 		}
 }
-
+void PBM::readPixelsBinary(std::istream& in) {
+	for (unsigned int i = 0; i < height; i++)
+		if (in) {
+			in.read((char*)pixel[i], sizeof(int) * width);
+		}
+}
 void PBM::printPixels() {
 	for (unsigned int i = 0; i < height; i++) {
 		for (unsigned int j = 0; j < width; j++) {
@@ -64,9 +71,16 @@ void PBM::printPixels(std::ostream& out) {
 			for (unsigned int j = 0; j < width; j++) {
 				out << pixel[i][j] << " ";
 			}
-			std::cout << '\n';
+			out << '\n';
 		}
 	}
+}
+void PBM::printPixelsBinary(std::ostream& out) {
+	for (unsigned int i = 0; i < height; i++) {
+		if (out) {
+				out.write((char*)pixel[i], sizeof(int)*width);
+			}
+		}
 }
 int** PBM::copyofPixel() {
 	int** copyP = new int* [height];
@@ -100,7 +114,6 @@ void PBM::rotate(std::string direction) {
 		height = height + width;
 		width = height - width;
 		height = height - width;
-		std::cout << "Right rotation successful!\n";
 	}
 	else if (direction == "left") {
 		int** copyP = copyofPixel();
@@ -111,28 +124,33 @@ void PBM::rotate(std::string direction) {
 				pixel[j][i] = copyP[i][width - j - 1];
 			}
 		deletecopyofPixel(copyP);
-		std::cout << "Left rotation successful!\n";
 		height = height + width;
 		width = height - width;
 		height = height - width;
 	}
 	else std::cout << "Not a direction";
 }
-void PBM::grayscale() {
-	std::cout << "It is grayscale.\n";
-}
-void PBM::monochrome() {
-	std::cout << "It is monochrome. \n";
-}
+void PBM::grayscale() {}
+void PBM::monochrome() {}
 void PBM::negative() {
 	for (unsigned int i = 0; i < height; i++)
 		for (unsigned int j = 0; j < width; j++)
 			pixel[i][j] = 1 - pixel[i][j];
-	std::cout << "Negativating successful.\n";
 }
 
 Image* PBM::getCopy() {
 	return new PBM(*this);
+}
+
+void PBM::save(std::ostream& out) {
+	out << magicNumber << '\n'
+		<< width << ' ' << height << '\n';
+	if (magicNumber == "P4") {
+		printPixelsBinary(out);
+	}
+	else{
+	printPixels(out);
+	}
 }
 std::istream& operator>>(std::istream& in, PBM& pb) {
 	pb.readPixels(in);

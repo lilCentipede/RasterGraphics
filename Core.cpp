@@ -23,9 +23,28 @@ std::string Core::getFirstWord() {
 }
 std::string Core::getSecondWord() {
     int pos1 = line.find(' ');
+    std::cout << pos1 << '\n';
     int pos2 = line.find('\0');
-    std::string sub = line.substr(pos1 + 1,pos2 - pos1);
+    std::cout << pos2 << '\n';
+    std::string sub = line.substr(pos1 + 1,-1 - pos1);
     return sub;
+}
+std::string Core::getIndexWord(int i) {
+    std::string res = line;
+    assert(i >0);
+    while (i) {
+        if (i == 1) {
+            int pos = res.find(' ');
+            res = res.substr(0, pos);
+            return res;
+        }
+        else {
+            int pos = res.find(' ');
+            res = res.substr(pos + 1);
+            i--;
+        }
+       
+    }
 }
 
 void Core::readCommand(SessionsManager& sm) {
@@ -45,12 +64,14 @@ void Core::readCommand(SessionsManager& sm) {
         else if (line == "help")
             command.help();
         else if (line == "close")
-           command.close(sm);
+            command.close(sm);
         else std::cout << "Wrong command!\n";
     }
     else if (numberwords == 2) {
-        std::string first = getFirstWord();
-        std::string second = getSecondWord();
+       // std::string first = getFirstWord();
+        std::string first = getIndexWord(1);
+        //std::string second = getSecondWord();
+        std::string second = getIndexWord(2);
         if (first == "load") {
             Image* i = createImage(second);
             command.load(sm, i);
@@ -60,7 +81,7 @@ void Core::readCommand(SessionsManager& sm) {
             command.add(sm, i);
         }
         else if (first == "saveas") {
-            command.saveAs(sm,second);
+            command.saveAs(sm, second);
         }
         else if (first == "rotate")
         {
@@ -77,6 +98,7 @@ void Core::readCommand(SessionsManager& sm) {
             command.sessionInfo(sm);
         else std::cout << "Wrong command!\n";
     }
+    else std::cout << "Wrong command!\n";
 }
 Image* Core::createImage(std::string& _name) {
     std::ifstream in(_name);
@@ -93,7 +115,7 @@ Image* Core::createImage(std::string& _name) {
         image->readPixels(in);
         return image;
     }
-    else if (magicNumber == "P2") {
+    else if (magicNumber == "P2" ) {
         unsigned int width;
         unsigned int height;
         unsigned int maxColor;
